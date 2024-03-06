@@ -38,6 +38,22 @@ function populatePorts() {
 }
 populatePorts();
 
+function checkMessage(recv_message) {
+  if (recv_message == "image1.jpg") {
+    imageDisplay.src = "images/image1.jpg";
+  } else if (recv_message == "image2.jpg") {
+    imageDisplay.src = "images/image2.jpg";
+  } else if (recv_message == "image3.jpg") {
+    imageDisplay.src = "images/image3.jpg";
+  } else {
+    imageDisplay.src = "";
+    imageDisplay.alt = "Received Message:" + recv_message;
+    console.log("Received Message:", recv_message);
+  }
+
+  instruction.textContent = "Received Data :  " + recv_message;
+}
+
 portPicker.addEventListener("change", () => {
   portPath = portPicker.value;
   connectButton.disabled = false;
