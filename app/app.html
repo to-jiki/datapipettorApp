@@ -7,21 +7,30 @@
   </head>
   <body>
     <div id="app">
-      <h1>Arduino Serial Monitor</h1>
-      <div>
-        <!-- <input type="text" id="port-picker" placeholder="input port number" /> -->
-        <label for="port-picker">Port:</label>
-        <select id="port-picker"></select>
+      <h1>DataPipettor Console</h1>
+      <div class="control-row">
+        <div>
+          <label for="port-picker">Port:</label>
+          <select id="port-picker"></select>
+        </div>
+        <div>
+          <label for="baud-rate">Baud Rate:</label>
+          <input type="number" id="baud-rate" value="115200" />
+        </div>
+        <button id="connect-button">Connect</button>
       </div>
-      <div>
-        <label for="baud-rate">Baud Rate:</label>
-        <input type="number" id="baud-rate" value="115200" />
+      <div class="data-column">
+        <div id="received-data-container">
+          Console for received data:
+          <pre id="received-data"></pre>
+        </div>
+        <div id="instruction-container">
+          <p id="instruction">
+            Plz select image and inputText and send to DataPipeItor .......
+          </p>
+        </div>
       </div>
-      <button id="connect-button">Connect</button>
-      <div id="data-container">
-        <pre id="received-data"></pre>
-      </div>
-      <div>
+      <div class="control-row">
         <input type="text" id="send-data" placeholder="Enter message to send" />
         <button id="send-button" disabled>Send</button>
       </div>
@@ -34,17 +43,15 @@
         style="max-width: 80%"
       />
     </div>
-    <select id="optionSelect">
-      <option value="select Image">Select Image</option>
-      <option value="image1.jpg">image1</option>
-      <option value="image2.jpg">image2</option>
-      <option value="image3.jpg">image3</option>
-      <!-- 他のオプションを追加 -->
-    </select>
-    <button id="send-button2">Send</button>
-    <p id="instruction">
-      Plz select image and inputText and send to DataPipeItor .......
-    </p>
+    <div class="control-row">
+      <select id="optionSelect">
+        <option value="select Image">Select Image</option>
+        <option value="image1.jpg">image1</option>
+        <option value="image2.jpg">image2</option>
+        <option value="image3.jpg">image3</option>
+      </select>
+      <button id="send-button2">Send</button>
+    </div>
     <button id="reload-button">Reload</button>
 
     <script src="renderer.js"></script>
