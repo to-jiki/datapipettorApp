@@ -97,7 +97,7 @@ connectButton.addEventListener("click", () => {
     } else {
       checkMessage(message);
     }
-    checkMessage(message);
+    // checkMessage(message);
     receivedData.textContent += "\n" + data.toString();
   });
 
