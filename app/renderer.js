@@ -48,19 +48,19 @@ function checkMessage(recv_message) {
   } else if (recv_message == "image3.jpg") {
     imageDisplay.src = "images/image3.jpg";
     instruction.textContent = "Received Data :  " + recv_message;
-  } else if (recv_message == "ACK") {
-    console.log("Received ACK !");
-    instruction.textContent = "Data Send to DataPipettor !";
-  } else if (recv_message == "comSuccess") {
-    console.log("comSuccess !");
-    instruction.textContent = "DataPipettor Com Success!";
-  } else {
+  }
+  // } else if (recv_message == "ACK") {
+  //   console.log("Received ACK !");
+  //   instruction.textContent = "Data Send to DataPipettor !";
+  // } else if (recv_message == "comSuccess") {
+  //   console.log("comSuccess !");
+  //   instruction.textContent = "DataPipettor Com Success!";
+  // }
+  else {
     imageDisplay.src = "";
     imageDisplay.alt = "Received Message:" + recv_message;
     console.log("Received Message:", recv_message);
   }
-
-  instruction.textContent = "Received Data :  " + recv_message;
 }
 
 portPicker.addEventListener("change", () => {
@@ -87,16 +87,16 @@ connectButton.addEventListener("click", () => {
     const cleanedData = data.toString().replace(/\r?\n|\r/g, "");
     const message = cleanedData.toString().trim();
 
-    // if (message == "ACK") {
-    //   console.log("Received ACK !");
-    //   instruction.textContent = "Data Send to DataPipettor !";
-    // }
-    // if (message == "comSuccess") {
-    //   console.log("comSuccess !");
-    //   instruction.textContent = "DataPipettor Com Success!";
-    // } else {
-    //   checkMessage(message);
-    // }
+    if (message == "ACK") {
+      console.log("Received ACK !");
+      instruction.textContent = "Data Send to DataPipettor !";
+    }
+    if (message == "comSuccess") {
+      console.log("comSuccess !");
+      instruction.textContent = "DataPipettor Com Success!";
+    } else {
+      checkMessage(message);
+    }
     checkMessage(message);
     receivedData.textContent += "\n" + data.toString();
   });
