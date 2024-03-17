@@ -7,8 +7,8 @@ const createWindow = () => {
     height: 1000,
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false, // コンテキスト分離を無効に
-      webSecurity: false, // セキュリティ機能を無効に
+      contextIsolation: false,
+      webSecurity: false,
     },
   });
   ipcMain.on("reload-window", () => {

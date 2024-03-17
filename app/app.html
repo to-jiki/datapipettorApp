@@ -21,6 +21,8 @@
       </div>
       <div class="data-column">
         <div id="received-data-container">
+          <!-- 別のコンソールを開いているとアプリ自体が使えなくなるので，
+            datapipettorで通信したときメッセージを表示する疑似コンソール -->
           Console for received data:
           <pre id="received-data"></pre>
         </div>
@@ -50,7 +52,7 @@
         <option value="image2.jpg">image2</option>
         <option value="image3.jpg">image3</option>
       </select>
-      <button id="send-button2">Send</button>
+      <button id="send-button2" disabled>Send</button>
     </div>
     <button id="reload-button">Reload</button>
 

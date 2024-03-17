@@ -17,10 +17,13 @@ const instruction = document.getElementById("instruction");
 let image;
 
 document.getElementById("reload-button").addEventListener("click", () => {
-  // リロードメッセージをメインプロセスに送信
+  // リロードメッセージをメインプロセスに送信してウィンドウをリロード
+  // ESPを差し直ししたりした時はここを押す
   ipcRenderer.send("reload-window");
 });
 
+//接続しているポートを取得してポートピッカーに表示
+//起動時に刺さってないとダメなので，付け外ししたらReload
 function populatePorts() {
   SerialPort.list()
     .then((ports) => {
@@ -38,15 +41,10 @@ function populatePorts() {
 }
 populatePorts();
 
+//DataPipettorからのメッセージをチェックして表示したりする関数
 function checkMessage(recv_message) {
-  if (recv_message == "image1.jpg") {
-    imageDisplay.src = "images/image1.jpg";
-    instruction.textContent = "Received Data :  " + recv_message;
-  } else if (recv_message == "image2.jpg") {
-    imageDisplay.src = "images/image2.jpg";
-    instruction.textContent = "Received Data :  " + recv_message;
-  } else if (recv_message == "image3.jpg") {
-    imageDisplay.src = "images/image3.jpg";
+  if (recv_message.includes("image")) {
+    imageDisplay.src = "images/" + recv_message;
     instruction.textContent = "Received Data :  " + recv_message;
   } else if (recv_message == "ACK") {
     console.log("Received ACK !");
@@ -81,20 +79,10 @@ connectButton.addEventListener("click", () => {
   // データを受信したときの処理
   port.on("data", (data) => {
     console.log("Received Data:", data.toString());
-
+    //受け取ったデータを整形，なぜか色々なモノが混じるので要検証
     const cleanedData = data.toString().replace(/\r?\n|\r/g, "");
     const message = cleanedData.toString().trim();
 
-    // if (message == "ACK") {
-    //   console.log("Received ACK !");
-    //   instruction.textContent = "Data Send to DataPipettor !";
-    // }
-    // if (message == "comSuccess") {
-    //   console.log("comSuccess !");
-    //   instruction.textContent = "DataPipettor Com Success!";
-    // } else {
-    //   checkMessage(message);
-    // }
     checkMessage(message);
     receivedData.textContent += "\n" + data.toString();
   });
@@ -106,9 +94,9 @@ connectButton.addEventListener("click", () => {
 
 sendButton.addEventListener("click", () => {
   const data = sendData.value;
-  port.write(data);
+  port.write(data); //データをESP側に渡す
   console.log("Send Data:", data.toString());
-  sendData.value = "";
+  sendData.value = ""; //送信後は入力欄をクリア
 });
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -118,24 +106,17 @@ document.addEventListener("DOMContentLoaded", () => {
     .addEventListener("change", function () {
       const selectedOption = this.value; // 選択されたオプションの値を取得
       const imageDisplay = document.getElementById("imageDisplay"); // 画像を表示するimgタグを取得
-      // console.log(selectedOption);
-      // sendButton2.disabled = false;
+      console.log(selectedOption);
+      sendButton2.disabled = false;
       image = selectedOption;
 
       // 選択されたオプションに基づいて画像のパスを更新
-      switch (selectedOption) {
-        case "image1.jpg":
-          imageDisplay.src = "images/image1.jpg";
+      switch (selectedOption.includes("image")) {
+        case true:
+          imageDisplay.src = "images/" + selectedOption;
           break;
-        case "image2.jpg":
-          imageDisplay.src = "images/image2.jpg";
-          break;
-        case "image3.jpg":
-          imageDisplay.src = "images/image3.jpg";
-          break;
-        // 必要に応じて他のケースを追加
         default:
-          imageDisplay.src = ""; // 何も選択されていない場合は画像をクリア
+          imageDisplay.src = "images/default.jpg"; // 何も選択されていない場合は画像をクリア
           break;
       }
     });
@@ -143,6 +124,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 sendButton2.addEventListener("click", () => {
   console.log("Send-Image :" + image);
-  port.write(image);
+  port.write(image); //データをESP側に渡す
   console.log("Send Data:", image);
 });
