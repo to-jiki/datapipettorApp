@@ -30,3 +30,9 @@ Node.js の公式サイト (https://nodejs.org)． 作成時のバージョン�
 7. 受信側で対象のデータがアプリのコンソール上に表示されたら完了．
 
 ### Arduinoのコードについて
+ackreq_esp32/ackreq_esp32.ino は簡単なACKREQで応答するプログラム．
+SENDERとRECEIVERで役割を書き込む段階で決める．
+
+datapipettor_demo/datapipettor_demo.inoは実際にアプリケーションで利用するときに書き込むコード
+こちらは特に書き込む段階で役割を意識する必要はない(デモをするときは気にする)
+
